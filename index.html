@@ -4,7 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScrubADubDudes - Washing Cars, Fighting Hunger</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --secondary: #0ea5e9;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #2563eb 0%, #0ea5e9 50%, #06b6d4 100%);
+            --gradient-3: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,40 +29,60 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--dark);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Header */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-2);
+            border-radius: 4px;
+        }
+
+        /* Advanced Header */
         header {
-            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 50%, #00BCD4 100%);
-            color: white;
-            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-medium);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 800;
             text-decoration: none;
-            color: white;
+            color: var(--dark);
             transition: transform 0.3s ease;
         }
 
@@ -54,58 +91,95 @@
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             margin-right: 12px;
-            background: white;
-            border-radius: 50%;
+            background: var(--gradient-2);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .logo:hover .logo-icon::before {
+            animation: shine 0.6s ease-in-out;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
-            color: white;
+            color: var(--dark);
             text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
             font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            left: 0;
         }
 
         .nav-links a:hover {
-            background: rgba(255,255,255,0.2);
+            color: white;
             transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
 
         .mobile-menu {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
         }
 
         .mobile-menu span {
             width: 25px;
             height: 3px;
-            background: white;
+            background: var(--dark);
             margin: 3px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        /* Hero Section */
+        /* Advanced Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.95), rgba(0, 188, 212, 0.95)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="bubbles" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="8" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="50" r="12" fill="rgba(255,255,255,0.08)"/><circle cx="80" cy="80" r="6" fill="rgba(255,255,255,0.12)"/></pattern></defs><rect width="1200" height="600" fill="url(%23bubbles)"/></svg>');
-            background-size: cover;
-            background-position: center;
             height: 100vh;
+            background: var(--gradient-2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -122,38 +196,66 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.3)" opacity="0.8"><animate attributeName="r" values="2;4;2" dur="3s" repeatCount="indefinite"/></circle><circle cx="70" cy="60" r="3" fill="rgba(255,255,255,0.2)" opacity="0.6"><animate attributeName="r" values="3;6;3" dur="4s" repeatCount="indefinite"/></circle><circle cx="50" cy="80" r="1.5" fill="rgba(255,255,255,0.4)" opacity="0.9"><animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite"/></circle></svg>');
-            animation: float 20s ease-in-out infinite;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="g" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23g)"/><circle cx="600" cy="300" r="100" fill="url(%23g)"/><circle cx="800" cy="600" r="200" fill="url(%23g)"/><circle cx="300" cy="700" r="120" fill="url(%23g)"/></svg>');
+            animation: float-shapes 20s ease-in-out infinite;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-up 15s infinite linear;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             padding: 2rem;
-            animation: fadeInUp 1s ease-out;
             z-index: 2;
             position: relative;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out;
         }
 
-        .hero .tagline {
-            font-size: 1.4rem;
+        .hero-tagline {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             margin-bottom: 2rem;
-            opacity: 0.95;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            opacity: 0.95;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease-out 0.4s both;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.6s both;
         }
 
         .btn {
@@ -161,114 +263,151 @@
             border: none;
             border-radius: 50px;
             font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
             background: white;
-            color: #2196F3;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: var(--primary);
+            box-shadow: var(--shadow-heavy);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            background: #f8f9fa;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
             background: white;
-            color: #2196F3;
-            transform: translateY(-3px);
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.05);
         }
 
-        /* Sections */
+        /* Advanced Sections */
         section {
-            padding: 5rem 2rem;
+            padding: 6rem 0;
             width: 100%;
+            position: relative;
         }
 
         .section-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
             text-align: center;
-            font-size: 2.8rem;
             margin-bottom: 1rem;
-            color: #333;
-            position: relative;
-            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-subtitle {
             text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 3rem;
-            max-width: 600px;
+            font-size: 1.3rem;
+            color: #64748b;
+            margin-bottom: 4rem;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            font-weight: 400;
         }
 
-        .section-title::after {
+        /* Mission Section with Glassmorphism */
+        .mission {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+        }
+
+        .mission::before {
             content: '';
             position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #2196F3, #00BCD4);
-            border-radius: 2px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(37,99,235,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(14,165,233,0.1)"/><circle cx="50" cy="70" r="2.5" fill="rgba(6,182,212,0.1)"/></svg>');
+            animation: float-bg 30s ease-in-out infinite;
         }
 
-        /* Mission Section */
-        .mission-content {
+        .mission-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
-        .mission-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
+        .mission-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
-        .mission-text h3 {
-            color: #2196F3;
+        .mission-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .mission-card-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            font-size: 1.4rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mission-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
         }
 
         .mission-visual {
-            background: linear-gradient(135deg, #2196F3, #00BCD4);
-            height: 400px;
-            border-radius: 20px;
+            background: var(--gradient-2);
+            height: 500px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 4rem;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.3);
+            font-size: 5rem;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-heavy);
         }
 
         .mission-visual::before {
@@ -278,112 +417,206 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="25" cy="25" r="15" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="25" cy="25" r="10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
-            animation: rotate 30s linear infinite;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate-slow 20s linear infinite;
         }
 
-        /* Impact Section */
+        /* Advanced Impact Section */
         .impact {
-            background: linear-gradient(135deg, #f8fbff, #e3f2fd);
+            background: var(--dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(37,99,235,0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(14,165,233,0.2) 0%, transparent 50%);
+        }
+
+        .impact .section-title {
+            color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .impact .section-subtitle {
+            color: #94a3b8;
         }
 
         .impact-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2;
         }
 
         .stat-card {
-            background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2rem;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.1);
-            transition: transform 0.3s ease;
-            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
         }
 
         .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: #2196F3;
-            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.2);
+            transform: translateY(-12px) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
         }
 
         .stat-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #2196F3;
+            font-size: 3.5rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
-            font-size: 1.1rem;
-            color: #666;
+            font-size: 1.2rem;
+            color: #94a3b8;
             font-weight: 500;
         }
 
-        /* How It Works Section */
+        /* How It Works with Timeline */
         .how-it-works {
-            background: white;
+            background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+            position: relative;
+        }
+
+        .process-timeline {
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-2);
+            border-radius: 2px;
+            z-index: 1;
         }
 
         .process-steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
         }
 
         .step-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            border: 2px solid #f0f0f0;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .step-card:hover {
-            transform: translateY(-5px);
-            border-color: #2196F3;
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
         }
 
         .step-number {
-            background: linear-gradient(135deg, #2196F3, #00BCD4);
+            background: var(--gradient-2);
             color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            padding: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            padding: 2rem;
             text-align: center;
+            position: relative;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
         }
 
         .step-content {
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
         .step-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: #333;
-            font-weight: 600;
+            color: var(--dark);
         }
 
         .step-description {
-            color: #666;
-            line-height: 1.6;
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 1.1rem;
         }
 
-        /* Get Involved Section */
+        /* Advanced Get Involved Section */
         .get-involved {
-            background: linear-gradient(135deg, #2196F3, #00BCD4);
+            background: var(--gradient-2);
             color: white;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .get-involved::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path d="M0,0 Q500,200 1000,0 L1000,200 Q500,400 0,200 Z" fill="rgba(255,255,255,0.05)"/><path d="M0,300 Q500,500 1000,300 L1000,500 Q500,700 0,500 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            animation: wave 15s ease-in-out infinite;
         }
 
         .get-involved .section-title {
@@ -391,117 +624,129 @@
         }
 
         .get-involved .section-subtitle {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .involvement-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2;
         }
 
         .involvement-card {
-            background: rgba(255,255,255,0.15);
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .involvement-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .involvement-card:hover::before {
+            transform: scale(1);
         }
 
         .involvement-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255,255,255,0.25);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform: translateY(-12px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
         }
 
         .involvement-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .involvement-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .involvement-card p {
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         /* Footer */
         footer {
-            background: #1a1a1a;
+            background: #0f172a;
             color: white;
-            padding: 4rem 2rem 2rem;
+            padding: 4rem 0 2rem;
+            position: relative;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 3rem;
-            margin-bottom: 2rem;
         }
 
         .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: #2196F3;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .footer-section p {
+        .footer-section p, .footer-section a {
+            color: #94a3b8;
             line-height: 1.8;
-            color: #ccc;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
             transition: color 0.3s ease;
-            display: block;
-            margin-bottom: 0.5rem;
         }
 
         .footer-section a:hover {
-            color: #2196F3;
+            color: white;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 2rem;
         }
 
         .social-links a {
-            display: inline-block;
-            width: 45px;
-            height: 45px;
-            background: #2196F3;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
             border-radius: 50%;
-            line-height: 45px;
-            text-align: center;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1.2rem;
         }
 
         .social-links a:hover {
-            transform: scale(1.1);
-            background: #00BCD4;
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-medium);
         }
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            color: #999;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid #334155;
+            color: #64748b;
         }
 
         /* Animations */
-        @keyframes fadeInUp {
+        @keyframes slideInUp {
             from {
                 opacity: 0;
                 transform: translateY(50px);
@@ -512,17 +757,72 @@
             }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+        @keyframes float-shapes {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
-        @keyframes rotate {
+        @keyframes float-up {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+
+        @keyframes rotate-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes float-bg {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .timeline-line {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -532,17 +832,8 @@
                 display: flex;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .tagline {
-                font-size: 1.1rem;
-            }
-            
-            .mission-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .hero-title {
+                font-size: 3rem;
             }
             
             .cta-buttons {
@@ -551,48 +842,49 @@
             }
             
             section {
-                padding: 3rem 1rem;
+                padding: 4rem 0;
             }
-
-            .section-title {
-                font-size: 2.2rem;
+            
+            .section-content {
+                padding: 0 1rem;
             }
         }
 
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        /* Parallax Effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
-        /* Loading animation */
-        .loading {
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+        /* Loading Animations */
+        .fade-in-up {
+            animation: slideInUp 0.8s ease-out forwards;
         }
+
+        .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav>
             <a href="#home" class="logo">
                 <div class="logo-icon">
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                        <circle cx="15" cy="15" r="12" fill="#2196F3"/>
-                        <circle cx="10" cy="10" r="3" fill="white" opacity="0.8"/>
-                        <circle cx="20" cy="12" r="2" fill="white" opacity="0.6"/>
-                        <circle cx="12" cy="20" r="2.5" fill="white" opacity="0.7"/>
-                        <path d="M5 25 Q15 20 25 25" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
-                    </svg>
+                    <i class="fas fa-car" style="color: white; font-size: 1.2rem;"></i>
                 </div>
                 ScrubADubDudes
             </a>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#mission">Mission</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#get-involved">Get Involved</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#mission"><i class="fas fa-bullseye"></i> Mission</a></li>
+                <li><a href="#impact"><i class="fas fa-chart-line"></i> Impact</a></li>
+                <li><a href="#how-it-works"><i class="fas fa-cogs"></i> How It Works</a></li>
+                <li><a href="#get-involved"><i class="fas fa-hands-helping"></i> Get Involved</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
             <div class="mobile-menu">
                 <span></span>
@@ -603,63 +895,75 @@
     </header>
 
     <section id="home" class="hero">
+        <div class="hero-particles"></div>
         <div class="hero-content">
-            <h1>ScrubADubDudes</h1>
-            <p class="tagline">Washing Cars, Fighting Hunger</p>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">We clean your car while making a difference in our community. Every wash helps feed families in need.</p>
+            <h1 class="hero-title">ScrubADubDudes</h1>
+            <p class="hero-tagline">Washing Cars, Fighting Hunger</p>
+            <p class="hero-description">We clean your car while making a difference in our community. Every wash helps feed families in need through our innovative charity car wash program.</p>
             <div class="cta-buttons">
-                <a href="#get-involved" class="btn btn-primary">Book a Wash</a>
-                <a href="#mission" class="btn btn-secondary">Learn More</a>
+                <a href="#get-involved" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book a Wash
+                </a>
+                <a href="#mission" class="btn btn-secondary">
+                    <i class="fas fa-play"></i> Learn More
+                </a>
             </div>
         </div>
     </section>
 
-    <section id="mission" class="loading">
+    <section id="mission" class="mission">
         <div class="section-content">
-            <h2 class="section-title">Our Mission</h2>
-            <p class="section-subtitle">Combining professional car washing services with charitable giving to fight hunger and poverty in our local communities.</p>
+            <h2 class="section-title reveal">Our Mission</h2>
+            <p class="section-subtitle reveal">Combining professional car washing services with charitable giving to fight hunger and poverty in our local communities.</p>
             
-            <div class="mission-content">
-                <div class="mission-text">
-                    <h3>🚗 Professional Car Care</h3>
-                    <p>We provide top-quality car washing and detailing services right in your neighborhood. Our experienced team uses eco-friendly products and professional techniques to make your vehicle shine.</p>
-                    
-                    <h3>❤️ Community Impact</h3>
-                    <p>Every car we wash directly supports local food banks and hunger relief programs. We believe that small actions can create big changes when we work together.</p>
-                    
-                    <h3>🌟 Convenient & Caring</h3>
-                    <p>We bring our services to you, making it easy to get a clean car while supporting a great cause. It's community service made simple and effective.</p>
+            <div class="mission-grid">
+                <div class="mission-cards">
+                    <div class="mission-card reveal fade-in-up">
+                        <div class="mission-card-icon">🚗</div>
+                        <h3>Professional Car Care</h3>
+                        <p>We provide top-quality car washing and detailing services right in your neighborhood. Our experienced team uses eco-friendly products and professional techniques to make your vehicle shine like new.</p>
+                    </div>
+                    <div class="mission-card reveal fade-in-up">
+                        <div class="mission-card-icon">❤️</div>
+                        <h3>Community Impact</h3>
+                        <p>Every car we wash directly supports local food banks and hunger relief programs. We believe that small actions can create big changes when we work together as a community.</p>
+                    </div>
+                    <div class="mission-card reveal fade-in-up">
+                        <div class="mission-card-icon">🌟</div>
+                        <h3>Convenient & Caring</h3>
+                        <p>We bring our services to you, making it easy to get a clean car while supporting a great cause. It's community service made simple, effective, and convenient.</p>
+                    </div>
                 </div>
-                <div class="mission-visual">
-                    🧽✨🚗
+                <div class="mission-visual reveal">
+                    <i class="fas fa-hands-wash" style="font-size: 5rem;"></i>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="impact" class="impact loading">
+    <section id="impact" class="impact">
         <div class="section-content">
-            <h2 class="section-title">Our Impact</h2>
-            <p class="section-subtitle">See how your car washes are making a real difference in fighting hunger</p>
+            <h2 class="section-title reveal">Our Impact</h2>
+            <p class="section-subtitle reveal">See how your car washes are making a real difference in fighting hunger in our community</p>
             
             <div class="impact-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">🚗</div>
+                <div class="stat-card reveal fade-in-up">
+                    <div class="stat-icon"><i class="fas fa-car"></i></div>
                     <div class="stat-number">50+</div>
                     <div class="stat-label">Cars Washed</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">💰</div>
+                <div class="stat-card reveal fade-in-up">
+                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
                     <div class="stat-number">$300+</div>
                     <div class="stat-label">Raised for Charity</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🍽️</div>
+                <div class="stat-card reveal fade-in-up">
+                    <div class="stat-icon"><i class="fas fa-utensils"></i></div>
                     <div class="stat-number">150+</div>
                     <div class="stat-label">Meals Funded</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
+                <div class="stat-card reveal fade-in-up">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-number">15+</div>
                     <div class="stat-label">Families Helped</div>
                 </div>
@@ -667,73 +971,84 @@
         </div>
     </section>
 
-    <section id="how-it-works" class="how-it-works loading">
+    <section id="how-it-works" class="how-it-works">
         <div class="section-content">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">Getting your car washed while helping your community is easier than ever</p>
+            <h2 class="section-title reveal">How It Works</h2>
+            <p class="section-subtitle reveal">Getting your car washed while helping your community is easier than ever with our streamlined process</p>
             
-            <div class="process-steps">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Book Online</h3>
-                        <p class="step-description">Schedule your car wash through our website or by calling us. Choose your preferred time and service level.</p>
+            <div class="process-timeline">
+                <div class="timeline-line"></div>
+                <div class="process-steps">
+                    <div class="step-card reveal fade-in-up">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title"><i class="fas fa-calendar-plus"></i> Book Online</h3>
+                            <p class="step-description">Schedule your car wash through our website or by calling us. Choose your preferred time, location, and service level that fits your needs.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3 class="step-title">We Come to You</h3>
-                        <p class="step-description">Our professional team arrives at your location with all the equipment and eco-friendly supplies needed.</p>
+                    <div class="step-card reveal fade-in-up">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title"><i class="fas fa-truck"></i> We Come to You</h3>
+                            <p class="step-description">Our professional team arrives at your location with all the equipment and eco-friendly supplies needed for a thorough cleaning.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Professional Service</h3>
-                        <p class="step-description">We thoroughly wash, clean, and detail your vehicle using professional techniques and quality products.</p>
+                    <div class="step-card reveal fade-in-up">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title"><i class="fas fa-spray-can"></i> Professional Service</h3>
+                            <p class="step-description">We thoroughly wash, clean, and detail your vehicle using professional techniques and quality products that protect your car's finish.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Make an Impact</h3>
-                        <p class="step-description">A portion of every payment goes directly to local food banks and hunger relief programs in your community.</p>
+                    <div class="step-card reveal fade-in-up">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title"><i class="fas fa-heart"></i> Make an Impact</h3>
+                            <p class="step-description">A portion of every payment goes directly to local food banks and hunger relief programs in your community, creating lasting change.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="get-involved" class="get-involved loading">
+    <section id="get-involved" class="get-involved">
         <div class="section-content">
-            <h2 class="section-title">Get Involved</h2>
-            <p class="section-subtitle">There are many ways to join our mission of washing cars and fighting hunger</p>
+            <h2 class="section-title reveal">Get Involved</h2>
+            <p class="section-subtitle reveal">There are many ways to join our mission of washing cars and fighting hunger in our community</p>
             
             <div class="involvement-options">
-                <div class="involvement-card">
-                    <div class="involvement-icon">🚗</div>
+                <div class="involvement-card reveal fade-in-up">
+                    <div class="involvement-icon"><i class="fas fa-car-wash"></i></div>
                     <h3>Book a Wash</h3>
-                    <p>Get your car professionally cleaned while supporting local hunger relief efforts. It's that simple!</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Schedule Now</a>
+                    <p>Get your car professionally cleaned while supporting local hunger relief efforts. It's that simple to make a difference!</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-calendar-check"></i> Schedule Now
+                    </a>
                 </div>
-                <div class="involvement-card">
-                    <div class="involvement-icon">🤝</div>
+                <div class="involvement-card reveal fade-in-up">
+                    <div class="involvement-icon"><i class="fas fa-hands-helping"></i></div>
                     <h3>Volunteer</h3>
-                    <p>Join our team of volunteers and help us wash cars while making a direct impact in your community.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Join Team</a>
+                    <p>Join our team of volunteers and help us wash cars while making a direct impact in your community. No experience needed!</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-user-plus"></i> Join Team
+                    </a>
                 </div>
-                <div class="involvement-card">
-                    <div class="involvement-icon">💰</div>
+                <div class="involvement-card reveal fade-in-up">
+                    <div class="involvement-icon"><i class="fas fa-donate"></i></div>
                     <h3>Donate</h3>
-                    <p>Make a direct contribution to our hunger relief efforts or sponsor car washes for families in need.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Donate</a>
+                    <p>Make a direct contribution to our hunger relief efforts or sponsor car washes for families in need in our community.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-heart"></i> Donate
+                    </a>
                 </div>
-                <div class="involvement-card">
-                    <div class="involvement-icon">📢</div>
+                <div class="involvement-card reveal fade-in-up">
+                    <div class="involvement-icon"><i class="fas fa-share-alt"></i></div>
                     <h3>Spread the Word</h3>
-                    <p>Help us reach more people by sharing our mission with friends, family, and neighbors.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Share</a>
+                    <p>Help us reach more people by sharing our mission with friends, family, and neighbors on social media and beyond.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-share"></i> Share
+                    </a>
                 </div>
             </div>
         </div>
@@ -742,37 +1057,39 @@
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Contact ScrubADubDudes</h3>
-                <p>📍 Serving Local Neighborhoods<br>
-                📞 Phone: (555) CAR-WASH<br>
-                ✉️ Email: hello@scrubadubdudes.org<br>
-                🕒 Monday - Saturday: 8AM - 6PM</p>
+                <h3><i class="fas fa-map-marker-alt"></i> Contact ScrubADubDudes</h3>
+                <p><i class="fas fa-location-arrow"></i> Serving Local Neighborhoods<br>
+                <i class="fas fa-phone"></i> Phone: (555) CAR-WASH<br>
+                <i class="fas fa-envelope"></i> Email: hello@scrubadubdudes.org<br>
+                <i class="fas fa-clock"></i> Monday - Saturday: 8AM - 6PM</p>
             </div>
             <div class="footer-section">
-                <h3>Quick Links</h3>
-                <a href="#mission">Our Mission</a>
-                <a href="#impact">Our Impact</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#get-involved">Get Involved</a>
-                <a href="#">Pricing</a>
-                <a href="#">FAQ</a>
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <p>
+                    <a href="#mission"><i class="fas fa-bullseye"></i> Our Mission</a><br>
+                    <a href="#impact"><i class="fas fa-chart-line"></i> Our Impact</a><br>
+                    <a href="#how-it-works"><i class="fas fa-cogs"></i> How It Works</a><br>
+                    <a href="#get-involved"><i class="fas fa-hands-helping"></i> Get Involved</a><br>
+                    <a href="#"><i class="fas fa-tag"></i> Pricing</a><br>
+                    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+                </p>
             </div>
             <div class="footer-section">
-                <h3>Our Partners</h3>
+                <h3><i class="fas fa-handshake"></i> Our Partners</h3>
                 <p>We proudly support:<br>
-                • Local Food Banks<br>
-                • Community Kitchens<br>
-                • Family Assistance Programs<br>
-                • Homeless Shelters</p>
+                <i class="fas fa-seedling"></i> Local Food Banks<br>
+                <i class="fas fa-home"></i> Community Kitchens<br>
+                <i class="fas fa-users"></i> Family Assistance Programs<br>
+                <i class="fas fa-hands"></i> Homeless Shelters</p>
             </div>
             <div class="footer-section">
-                <h3>Follow Our Mission</h3>
+                <h3><i class="fas fa-share-alt"></i> Follow Our Mission</h3>
                 <p>Stay updated on our impact and community events</p>
                 <div class="social-links">
-                    <a href="#" title="Facebook">📘</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="TikTok">🎵</a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
@@ -782,7 +1099,19 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Advanced scroll effects
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const scrolled = window.pageYOffset > 100;
+            
+            if (scrolled) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -796,7 +1125,7 @@
             });
         });
 
-        // Animation on scroll
+        // Scroll reveal animation
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -805,19 +1134,78 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('active');
                 }
             });
         }, observerOptions);
 
-        // Observe all sections with loading class
-        document.querySelectorAll('.loading').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'all 0.8s ease-out';
-            observer.observe(section);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Particle system for hero
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 6 + 4;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            
+            document.querySelector('.hero-particles').appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, 20000);
+        }
+
+        // Create particles
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createParticle, i * 500);
+        }
+
+        setInterval(createParticle, 2000);
+
+        // Advanced counter animation
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                const increment = target / 60;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (counter.textContent.includes('+')) {
+                            counter.textContent = Math.floor(current) + '+';
+                        } else if (counter.textContent.includes('$')) {
+                            counter.textContent = '$' + Math.floor(current) + '+';
+                        } else {
+                            counter.textContent = Math.floor(current) + '+';
+                        }
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+                updateCounter();
+            });
+        };
+
+        // Trigger counter animation
+        const impactSection = document.querySelector('#impact');
+        const impactObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateCounters, 500);
+                    impactObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        impactObserver.observe(impactSection);
 
         // Mobile menu toggle
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -827,160 +1215,26 @@
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Counter animation for stats
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.stat-number');
-            counters.forEach(counter => {
-                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
-                const increment = target / 100;
-                let current = 0;
-                
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        if (counter.textContent.includes('+')) {
-                            counter.textContent = Math.floor(current).toLocaleString() + '+';
-                        } else                         if (counter.textContent.includes('
-                            counter.textContent = Math.floor(current).toLocaleString() + '+';
-                        }
-                        requestAnimationFrame(updateCounter);
-                    }
-                };
-                updateCounter();
-            });
-        };
-
-        // Trigger counter animation when impact section is visible
-        const impactSection = document.querySelector('#impact');
-        const impactObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateCounters, 500);
-                    impactObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        impactObserver.observe(impactSection);
-
-        // Add floating bubbles animation
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.style.position = 'absolute';
-            bubble.style.width = Math.random() * 10 + 5 + 'px';
-            bubble.style.height = bubble.style.width;
-            bubble.style.background = 'rgba(255,255,255,0.1)';
-            bubble.style.borderRadius = '50%';
-            bubble.style.left = Math.random() * 100 + '%';
-            bubble.style.bottom = '-10px';
-            bubble.style.pointerEvents = 'none';
-            bubble.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
+        // Parallax effect (simplified for performance)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
             
-            document.querySelector('.hero').appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 5000);
-        }
-
-        // Create bubbles periodically
-        setInterval(createBubble, 3000);
-    </script>
-</body>
-</html>)) {
-                            counter.textContent = '
-                            counter.textContent = Math.floor(current).toLocaleString() + '+';
-                        }
-                        requestAnimationFrame(updateCounter);
-                    }
-                };
-                updateCounter();
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
             });
-        };
+        });
 
-        // Trigger counter animation when impact section is visible
-        const impactSection = document.querySelector('#impact');
-        const impactObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateCounters, 500);
-                    impactObserver.unobserve(entry.target);
-                }
+        // Add loading animation classes
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in-up').forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
             });
-        }, { threshold: 0.5 });
-
-        impactObserver.observe(impactSection);
-
-        // Add floating bubbles animation
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.style.position = 'absolute';
-            bubble.style.width = Math.random() * 10 + 5 + 'px';
-            bubble.style.height = bubble.style.width;
-            bubble.style.background = 'rgba(255,255,255,0.1)';
-            bubble.style.borderRadius = '50%';
-            bubble.style.left = Math.random() * 100 + '%';
-            bubble.style.bottom = '-10px';
-            bubble.style.pointerEvents = 'none';
-            bubble.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
-            
-            document.querySelector('.hero').appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 5000);
-        }
-
-        // Create bubbles periodically
-        setInterval(createBubble, 3000);
-    </script>
-</body>
-</html> + Math.floor(current) + '+';
-                        } else {
-                            counter.textContent = Math.floor(current).toLocaleString() + '+';
-                        }
-                        requestAnimationFrame(updateCounter);
-                    }
-                };
-                updateCounter();
-            });
-        };
-
-        // Trigger counter animation when impact section is visible
-        const impactSection = document.querySelector('#impact');
-        const impactObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateCounters, 500);
-                    impactObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        impactObserver.observe(impactSection);
-
-        // Add floating bubbles animation
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.style.position = 'absolute';
-            bubble.style.width = Math.random() * 10 + 5 + 'px';
-            bubble.style.height = bubble.style.width;
-            bubble.style.background = 'rgba(255,255,255,0.1)';
-            bubble.style.borderRadius = '50%';
-            bubble.style.left = Math.random() * 100 + '%';
-            bubble.style.bottom = '-10px';
-            bubble.style.pointerEvents = 'none';
-            bubble.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
-            
-            document.querySelector('.hero').appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 5000);
-        }
-
-        // Create bubbles periodically
-        setInterval(createBubble, 3000);
+        });
     </script>
 </body>
 </html>
