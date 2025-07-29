@@ -33,7 +33,6 @@
             line-height: 1.6;
             color: var(--dark);
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
         /* Custom Scrollbar */
@@ -84,6 +83,7 @@
             text-decoration: none;
             color: var(--dark);
             transition: transform 0.2s ease;
+            cursor: pointer;
         }
 
         .logo:hover {
@@ -117,9 +117,10 @@
             border-radius: 8px;
             transition: all 0.2s ease;
             font-size: 0.95rem;
+            cursor: pointer;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover, .nav-links a.active {
             background: var(--gradient-2);
             color: white;
             transform: translateY(-1px);
@@ -141,7 +142,18 @@
             border-radius: 2px;
         }
 
-        /* Advanced Hero Section */
+        /* Tab Content Container */
+        .tab-content {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Hero Section */
         .hero {
             height: 100vh;
             background: var(--gradient-2);
@@ -263,17 +275,20 @@
             transform: translateY(-3px) scale(1.05);
         }
 
-        /* Advanced Sections */
-        section {
-            padding: 6rem 0;
+        /* Section Styling */
+        .section {
+            padding: 6rem 2rem;
             width: 100%;
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .section-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            width: 100%;
         }
 
         .section-title {
@@ -301,7 +316,6 @@
         /* Mission Section with Glassmorphism */
         .mission {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            position: relative;
         }
 
         .mission::before {
@@ -386,12 +400,10 @@
             animation: rotate-slow 20s linear infinite;
         }
 
-        /* Advanced Impact Section */
+        /* Impact Section */
         .impact {
             background: var(--dark);
             color: white;
-            position: relative;
-            overflow: hidden;
         }
 
         .impact::before {
@@ -484,182 +496,37 @@
             font-weight: 500;
         }
 
-        /* How It Works with Timeline */
-        .how-it-works {
-            background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
-            position: relative;
+        /* Contact Section */
+        .contact {
+            background: #0f172a;
+            color: white;
         }
 
-        .process-timeline {
-            position: relative;
-            margin-top: 4rem;
-        }
-
-        .timeline-line {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-2);
-            border-radius: 2px;
-            z-index: 1;
-        }
-
-        .process-steps {
+        .contact-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             position: relative;
             z-index: 2;
         }
 
-        .step-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .step-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .step-number {
-            background: var(--gradient-2);
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f093fb, #f5576c);
-        }
-
-        .step-content {
-            padding: 2.5rem;
-        }
-
-        .step-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .step-description {
-            color: #64748b;
-            line-height: 1.7;
-            font-size: 1.1rem;
-        }
-
-        /* Advanced Get Involved Section */
-        .get-involved {
-            background: var(--gradient-2);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .get-involved::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path d="M0,0 Q500,200 1000,0 L1000,200 Q500,400 0,200 Z" fill="rgba(255,255,255,0.05)"/><path d="M0,300 Q500,500 1000,300 L1000,500 Q500,700 0,500 Z" fill="rgba(255,255,255,0.03)"/></svg>');
-            animation: wave 15s ease-in-out infinite;
-        }
-
-        .get-involved .section-title {
-            color: white;
-        }
-
-        .get-involved .section-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .involvement-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .involvement-card {
-            background: rgba(255, 255, 255, 0.1);
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             padding: 3rem 2rem;
             text-align: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
         }
 
-        .involvement-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease;
+        .contact-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
         }
 
-        .involvement-card:hover::before {
-            transform: scale(1);
-        }
-
-        .involvement-card:hover {
-            transform: translateY(-12px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-        }
-
-        .involvement-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: white;
-            padding: 4rem 0 2rem;
-            position: relative;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-section h3 {
+        .contact-card h3 {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 2rem;
@@ -669,19 +536,20 @@
             background-clip: text;
         }
 
-        .footer-section p, .footer-section a {
+        .contact-card p, .contact-card a {
             color: #94a3b8;
             line-height: 1.8;
             transition: color 0.3s ease;
         }
 
-        .footer-section a:hover {
+        .contact-card a:hover {
             color: white;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
+            justify-content: center;
             margin-top: 2rem;
         }
 
@@ -700,14 +568,6 @@
         .social-links a:hover {
             transform: translateY(-3px) scale(1.1);
             box-shadow: var(--shadow-medium);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid #334155;
-            color: #64748b;
         }
 
         /* Animations */
@@ -749,31 +609,9 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
         @keyframes float-bg {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-10px) scale(1.05); }
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-50px); }
-        }
-
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         /* Responsive Design */
@@ -781,10 +619,6 @@
             .mission-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
-            }
-            
-            .timeline-line {
-                display: none;
             }
         }
 
@@ -806,50 +640,26 @@
                 align-items: center;
             }
             
-            section {
-                padding: 4rem 0;
-            }
-            
-            .section-content {
-                padding: 0 1rem;
+            .section {
+                padding: 4rem 1rem;
             }
         }
-
-        /* Parallax Effect */
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        /* Loading Animations */
-        .fade-in-up {
-            animation: slideInUp 0.8s ease-out forwards;
-        }
-
-        .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
-        .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
-        .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
-        .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
     <header id="header">
         <nav>
-            <a href="#home" class="logo">
+            <div class="logo" onclick="showTab('home')">
                 <div class="logo-icon">
                     <i class="fas fa-car" style="color: white; font-size: 1.2rem;"></i>
                 </div>
                 ScrubADubDudes
-            </a>
+            </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#mission">Mission</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#get-involved">Get Involved</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a onclick="showTab('home')" class="active">Home</a></li>
+                <li><a onclick="showTab('mission')">Mission</a></li>
+                <li><a onclick="showTab('impact')">Impact</a></li>
+                <li><a onclick="showTab('contact')">Contact</a></li>
             </ul>
             <div class="mobile-menu">
                 <span></span>
@@ -859,346 +669,243 @@
         </nav>
     </header>
 
-    <section id="home" class="hero">
-        <div class="hero-particles"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">ScrubADubDudes</h1>
-            <p class="hero-tagline">Washing Cars, Fighting Hunger</p>
-            <p class="hero-description">We clean your car while making a difference in our community. Every wash helps feed families in need through our innovative charity car wash program.</p>
-            <div class="cta-buttons">
-                <a href="#get-involved" class="btn btn-primary">
-                    <i class="fas fa-calendar-check"></i> Book a Wash
-                </a>
-                <a href="#mission" class="btn btn-secondary">
-                    <i class="fas fa-play"></i> Learn More
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="mission" class="mission">
-        <div class="section-content">
-            <h2 class="section-title reveal">Our Mission</h2>
-            <p class="section-subtitle reveal">Combining professional car washing services with charitable giving to fight hunger and poverty in our local communities.</p>
-            
-            <div class="mission-grid">
-                <div class="mission-cards">
-                    <div class="mission-card reveal fade-in-up">
-                        <div class="mission-card-icon">🚗</div>
-                        <h3>Professional Car Care</h3>
-                        <p>We provide top-quality car washing and detailing services right in your neighborhood. Our experienced team uses eco-friendly products and professional techniques to make your vehicle shine like new.</p>
-                    </div>
-                    <div class="mission-card reveal fade-in-up">
-                        <div class="mission-card-icon">❤️</div>
-                        <h3>Community Impact</h3>
-                        <p>Every car we wash directly supports local food banks and hunger relief programs. We believe that small actions can create big changes when we work together as a community.</p>
-                    </div>
-                    <div class="mission-card reveal fade-in-up">
-                        <div class="mission-card-icon">🌟</div>
-                        <h3>Convenient & Caring</h3>
-                        <p>We bring our services to you, making it easy to get a clean car while supporting a great cause. It's community service made simple, effective, and convenient.</p>
-                    </div>
-                </div>
-                <div class="mission-visual reveal">
-                    <i class="fas fa-hands-wash" style="font-size: 5rem;"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="impact" class="impact">
-        <div class="section-content">
-            <h2 class="section-title reveal">Our Impact</h2>
-            <p class="section-subtitle reveal">See how your car washes are making a real difference in fighting hunger in our community</p>
-            
-            <div class="impact-stats">
-                <div class="stat-card reveal fade-in-up">
-                    <div class="stat-icon"><i class="fas fa-car"></i></div>
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Cars Washed</div>
-                </div>
-                <div class="stat-card reveal fade-in-up">
-                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
-                    <div class="stat-number">$300+</div>
-                    <div class="stat-label">Raised for Charity</div>
-                </div>
-                <div class="stat-card reveal fade-in-up">
-                    <div class="stat-icon"><i class="fas fa-utensils"></i></div>
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Meals Funded</div>
-                </div>
-                <div class="stat-card reveal fade-in-up">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">People Helped</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="how-it-works" class="how-it-works">
-        <div class="section-content">
-            <h2 class="section-title reveal">How It Works</h2>
-            <p class="section-subtitle reveal">Getting your car washed while helping your community is easier than ever with our streamlined process</p>
-            
-            <div class="process-timeline">
-                <div class="timeline-line"></div>
-                <div class="process-steps">
-                    <div class="step-card reveal fade-in-up">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3 class="step-title"><i class="fas fa-calendar-plus"></i> Book Online</h3>
-                            <p class="step-description">Schedule your car wash through our website or by calling us. Choose your preferred time, location, and service level that fits your needs.</p>
-                        </div>
-                    </div>
-                    <div class="step-card reveal fade-in-up">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3 class="step-title"><i class="fas fa-truck"></i> We Come to You</h3>
-                            <p class="step-description">Our professional team arrives at your location with all the equipment and eco-friendly supplies needed for a thorough cleaning.</p>
-                        </div>
-                    </div>
-                    <div class="step-card reveal fade-in-up">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3 class="step-title"><i class="fas fa-spray-can"></i> Professional Service</h3>
-                            <p class="step-description">We thoroughly wash, clean, and detail your vehicle using professional techniques and quality products that protect your car's finish.</p>
-                        </div>
-                    </div>
-                    <div class="step-card reveal fade-in-up">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h3 class="step-title"><i class="fas fa-heart"></i> Make an Impact</h3>
-                            <p class="step-description">A portion of every payment goes directly to local food banks and hunger relief programs in your community, creating lasting change.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="get-involved" class="get-involved">
-        <div class="section-content">
-            <h2 class="section-title reveal">Get Involved</h2>
-            <p class="section-subtitle reveal">There are many ways to join our mission of washing cars and fighting hunger in our community</p>
-            
-            <div class="involvement-options">
-                <div class="involvement-card reveal fade-in-up">
-                    <div class="involvement-icon"><i class="fas fa-car-wash"></i></div>
-                    <h3>Book a Wash</h3>
-                    <p>Get your car professionally cleaned while supporting local hunger relief efforts. It's that simple to make a difference!</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-calendar-check"></i> Schedule Now
+    <!-- Home Tab -->
+    <div id="home" class="tab-content active">
+        <section class="hero">
+            <div class="hero-particles"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">ScrubADubDudes</h1>
+                <p class="hero-tagline">Washing Cars, Fighting Hunger</p>
+                <p class="hero-description">We clean your car while making a difference in our community. Every wash helps feed families in need through our innovative charity car wash program.</p>
+                <div class="cta-buttons">
+                    <a onclick="showTab('contact')" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i> Book a Wash
                     </a>
-                </div>
-                <div class="involvement-card reveal fade-in-up">
-                    <div class="involvement-icon"><i class="fas fa-hands-helping"></i></div>
-                    <h3>Volunteer</h3>
-                    <p>Join our team of volunteers and help us wash cars while making a direct impact in your community. No experience needed!</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-user-plus"></i> Join Team
-                    </a>
-                </div>
-                <div class="involvement-card reveal fade-in-up">
-                    <div class="involvement-icon"><i class="fas fa-donate"></i></div>
-                    <h3>Donate</h3>
-                    <p>Make a direct contribution to our hunger relief efforts or sponsor car washes for families in need in our community.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-heart"></i> Donate
-                    </a>
-                </div>
-                <div class="involvement-card reveal fade-in-up">
-                    <div class="involvement-icon"><i class="fas fa-share-alt"></i></div>
-                    <h3>Spread the Word</h3>
-                    <p>Help us reach more people by sharing our mission with friends, family, and neighbors on social media and beyond.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-share"></i> Share
+                    <a onclick="showTab('mission')" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> Learn More
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-map-marker-alt"></i> Contact ScrubADubDudes</h3>
-                <p><i class="fas fa-location-arrow"></i> Serving Local Neighborhoods<br>
-                <i class="fas fa-phone"></i> Phone: (555) CAR-WASH<br>
-                <i class="fas fa-envelope"></i> Email: hello@scrubadubdudes.org<br>
-                <i class="fas fa-clock"></i> Monday - Saturday: 8AM - 6PM</p>
-            </div>
-            <div class="footer-section">
-                <h3><i class="fas fa-link"></i> Quick Links</h3>
-                <p>
-                    <a href="#mission"><i class="fas fa-bullseye"></i> Our Mission</a><br>
-                    <a href="#impact"><i class="fas fa-chart-line"></i> Our Impact</a><br>
-                    <a href="#how-it-works"><i class="fas fa-cogs"></i> How It Works</a><br>
-                    <a href="#get-involved"><i class="fas fa-hands-helping"></i> Get Involved</a><br>
-                    <a href="#"><i class="fas fa-tag"></i> Pricing</a><br>
-                    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
-                </p>
-            </div>
-            <div class="footer-section">
-                <h3><i class="fas fa-handshake"></i> Our Partners</h3>
-                <p>We proudly support:<br>
-                <i class="fas fa-seedling"></i> Local Food Banks<br>
-                <i class="fas fa-home"></i> Community Kitchens<br>
-                <i class="fas fa-users"></i> Family Assistance Programs<br>
-                <i class="fas fa-hands"></i> Homeless Shelters</p>
-            </div>
-            <div class="footer-section">
-                <h3><i class="fas fa-share-alt"></i> Follow Our Mission</h3>
-                <p>Stay updated on our impact and community events</p>
-                <div class="social-links">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <!-- Mission Tab -->
+    <div id="mission" class="tab-content">
+        <section class="section mission">
+            <div class="section-content">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-subtitle">Combining professional car washing services with charitable giving to fight hunger and poverty in our local communities.</p>
+                
+                <div class="mission-grid">
+                    <div class="mission-cards">
+                        <div class="mission-card">
+                            <div class="mission-card-icon">🚗</div>
+                            <h3>Professional Car Care</h3>
+                            <p>We provide top-quality car washing and detailing services right in your neighborhood. Our experienced team uses eco-friendly products and professional techniques to make your vehicle shine like new.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-card-icon">❤️</div>
+                            <h3>Community Impact</h3>
+                            <p>Every car we wash directly supports local food banks and hunger relief programs. We believe that small actions can create big changes when we work together as a community.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-card-icon">🌟</div>
+                            <h3>Convenient & Caring</h3>
+                            <p>We bring our services to you, making it easy to get a clean car while supporting a great cause. It's community service made simple, effective, and convenient.</p>
+                        </div>
+                    </div>
+                    <div class="mission-visual">
+                        <i class="fas fa-hands-wash" style="font-size: 5rem;"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 ScrubADubDudes. All rights reserved. | A registered 501(c)(3) nonprofit organization</p>
-        </div>
-    </footer>
+        </section>
+    </div>
+
+    <!-- Impact Tab -->
+    <div id="impact" class="tab-content">
+        <section class="section impact">
+            <div class="section-content">
+                <h2 class="section-title">Our Impact</h2>
+                <p class="section-subtitle">See how your car washes are making a real difference in fighting hunger in our community</p>
+                
+                <div class="impact-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-car"></i></div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Cars Washed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="stat-number">$300+</div>
+                        <div class="stat-label">Raised for Charity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Meals Funded</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">People Helped</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Tab -->
+    <div id="contact" class="tab-content">
+        <section class="section contact">
+            <div class="section-content">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">Ready to get your car washed while making a difference? Get in touch with us!</p>
+                
+                <div class="contact-content">
+                    <div class="contact-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Contact Info</h3>
+                        <p><i class="fas fa-location-arrow"></i> Serving Local Neighborhoods<br>
+                        <i class="fas fa-phone"></i> Phone: (555) CAR-WASH<br>
+                        <i class="fas fa-envelope"></i> Email: hello@scrubadubdudes.org<br>
+                        <i class="fas fa-clock"></i> Monday - Saturday: 8AM - 6PM</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3><i class="fas fa-handshake"></i> Our Partners</h3>
+                        <p>We proudly support:<br>
+                        <i class="fas fa-seedling"></i> Local Food Banks<br>
+                        <i class="fas fa-home"></i> Community Kitchens<br>
+                        <i class="fas fa-users"></i> Family Assistance Programs<br>
+                        <i class="fas fa-hands"></i> Homeless Shelters</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3><i class="fas fa-share-alt"></i> Follow Our Mission</h3>
+                        <p>Stay updated on our impact and community events</p>
+                        <div class="social-links">
+                            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #334155; color: #64748b;">
+                    <p>&copy; 2025 ScrubADubDudes. All rights reserved. | A registered 501(c)(3) nonprofit organization</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <script>
-        // Advanced scroll effects
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            const scrolled = window.pageYOffset > 100;
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
             
-            if (scrolled) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+            // Remove active class from nav links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Animate counters if impact tab is shown
+            if (tabName === 'impact') {
+                setTimeout(animateCounters, 500);
             }
-        });
+            
+            // Create particles if home tab is shown
+            if (tabName === 'home') {
+                setTimeout(createParticles, 100);
+            }
+        }
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(function(counter) {
+                const target = parseInt(counter.textContent.replace(/\D/g, ''));
+                let current = 0;
+                const increment = target / 50;
+                
+                const timer = setInterval(function() {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    const value = Math.floor(current);
+                    if (counter.textContent.indexOf('$') !== -1) {
+                        counter.textContent = '$' + value + '+';
+                    } else {
+                        counter.textContent = value + '+';
+                    }
+                }, 50);
             });
-        });
+        }
 
-        // Scroll reveal animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Particle system for hero
+        // Particle system
         function createParticle() {
+            const heroParticles = document.querySelector('.hero-particles');
+            if (!heroParticles) return;
+            
             const particle = document.createElement('div');
             particle.className = 'particle';
-            
-            const size = Math.random() * 6 + 4;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
+            particle.style.width = Math.random() * 6 + 4 + 'px';
+            particle.style.height = particle.style.width;
             particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 15 + 's';
             
-            document.querySelector('.hero-particles').appendChild(particle);
+            heroParticles.appendChild(particle);
             
-            setTimeout(() => {
+            setTimeout(function() {
                 if (particle.parentNode) {
                     particle.remove();
                 }
             }, 20000);
         }
 
-        // Create particles
-        for (let i = 0; i < 50; i++) {
-            setTimeout(createParticle, i * 500);
-        }
-
-        setInterval(createParticle, 2000);
-
-        // Advanced counter animation
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.stat-number');
-            counters.forEach(counter => {
-                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
-                const increment = target / 60;
-                let current = 0;
-                
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        if (counter.textContent.includes('+')) {
-                            counter.textContent = Math.floor(current) + '+';
-                        } else if (counter.textContent.includes('$')) {
-                            counter.textContent = '$' + Math.floor(current) + '+';
-                        } else {
-                            counter.textContent = Math.floor(current) + '+';
-                        }
-                        requestAnimationFrame(updateCounter);
-                    }
-                };
-                updateCounter();
-            });
-        };
-
-        // Trigger counter animation
-        const impactSection = document.querySelector('#impact');
-        const impactObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateCounters, 500);
-                    impactObserver.unobserve(entry.target);
+        function createParticles() {
+            // Create initial particles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createParticle, i * 500);
+            }
+            
+            // Continue creating particles
+            const particleInterval = setInterval(function() {
+                if (document.getElementById('home').classList.contains('active')) {
+                    createParticle();
+                } else {
+                    clearInterval(particleInterval);
                 }
-            });
-        }, { threshold: 0.5 });
-
-        impactObserver.observe(impactSection);
+            }, 3000);
+        }
 
         // Mobile menu toggle
         const mobileMenu = document.querySelector('.mobile-menu');
         const navLinks = document.querySelector('.nav-links');
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Parallax effect (simplified for performance)
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.parallax');
-            
-            parallaxElements.forEach(element => {
-                const speed = 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
+        if (mobileMenu && navLinks) {
+            mobileMenu.addEventListener('click', function() {
+                if (navLinks.style.display === 'flex') {
+                    navLinks.style.display = 'none';
+                } else {
+                    navLinks.style.display = 'flex';
+                }
             });
-        });
+        }
 
-        // Add loading animation classes
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.fade-in-up').forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
         });
     </script>
 </body>
