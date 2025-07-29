@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Wash - ScrubADubDudes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --secondary: #0ea5e9;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient-2: linear-gradient(135deg, #2563eb 0%, #0ea5e9 50%, #06b6d4 100%);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            margin-right: 10px;
+            background: var(--gradient-2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .back-btn {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .booking-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .booking-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .service-option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-option:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+
+        .service-option.selected {
+            border-color: var(--primary);
+            background: var(--gradient-2);
+            color: white;
+        }
+
+        .service-option input[type="radio"] {
+            display: none;
+        }
+
+        .service-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .service-option.selected .service-price {
+            color: white;
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn {
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #ef4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .charity-info {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .charity-info h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 2rem;
+            }
+            
+            .booking-title {
+                font-size: 2rem;
+            }
+            
+            .service-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-car" style="color: white; font-size: 1.2rem;"></i>
+                </div>
+                ScrubADubDudes
+            </a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="booking-header">
+            <h1 class="booking-title">Book Your Car Wash</h1>
+            <p class="booking-subtitle">Get your car professionally cleaned while supporting local hunger relief efforts</p>
+        </div>
+
+        <form class="form-container" id="bookingForm">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-user"></i> Personal Information
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Location -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i> Service Location
+                </h3>
+                <div class="form-group">
+                    <label for="address">Street Address *</label>
+                    <input type="text" id="address" name="address" required placeholder="123 Main Street">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">ZIP Code *</label>
+                        <input type="text" id="zipCode" name="zipCode" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Information -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-car"></i> Vehicle Information
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleMake">Make *</label>
+                        <input type="text" id="vehicleMake" name="vehicleMake" required placeholder="Toyota, Honda, Ford, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Model *</label>
+                        <input type="text" id="vehicleModel" name="vehicleModel" required placeholder="Camry, Civic, F-150, etc.">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleYear">Year</label>
+                        <input type="number" id="vehicleYear" name="vehicleYear" min="1990" max="2025" placeholder="2020">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleColor">Color</label>
+                        <input type="text" id="vehicleColor" name="vehicleColor" placeholder="White, Black, Silver, etc.">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Selection -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-spray-can"></i> Service Package
+                </h3>
+                <div class="service-options">
+                    <div class="service-option" onclick="selectService('basic')">
+                        <input type="radio" name="service" value="basic" id="basic">
+                        <div class="service-title">Basic Wash</div>
+                        <div class="service-price">$25</div>
+                        <div class="service-description">Exterior wash, tire cleaning, basic interior vacuum</div>
+                    </div>
+                    <div class="service-option" onclick="selectService('premium')">
+                        <input type="radio" name="service" value="premium" id="premium">
+                        <div class="service-title">Premium Detail</div>
+                        <div class="service-price">$45</div>
+                        <div class="service-description">Full wash, wax, interior detail, tire shine</div>
+                    </div>
+                    <div class="service-option" onclick="selectService('deluxe')">
+                        <input type="radio" name="service" value="deluxe" id="deluxe">
+                        <div class="service-title">Deluxe Package</div>
+                        <div class="service-price">$65</div>
+                        <div class="service-description">Complete detail, clay bar, protection, deep interior clean</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scheduling -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-calendar"></i> Preferred Scheduling
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="preferredDate">Preferred Date</label>
+                        <input type="date" id="preferredDate" name="preferredDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredTime">Preferred Time</label>
+                        <select id="preferredTime" name="preferredTime">
+                            <option value="">Select a time</option>
+                            <option value="morning">Morning (8AM - 12PM)</option>
+                            <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                            <option value="evening">Evening (4PM - 6PM)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-comment"></i> Additional Information
+                </h3>
+                <div class="form-group">
+                    <label for="notes">Special Requests or Notes</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Any special instructions, access information, or specific areas of concern..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-calendar-check"></i> Book My Car Wash
+            </button>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Booking request sent successfully! We'll contact you within 24 hours to confirm your appointment.
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-triangle"></i> Sorry, there was an error sending your booking request. Please try again or call us directly.
+            </div>
+        </form>
+
+        <div class="charity-info">
+            <h3><i class="fas fa-heart"></i> Your Impact</h3>
+            <p>Every car wash directly supports local food banks and hunger relief programs. Your service helps feed families in need while keeping your vehicle spotless!</p>
+        </div>
+    </div>
+
+    <script>
+        function selectService(serviceType) {
+            // Remove selected class from all options
+            document.querySelectorAll('.service-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.currentTarget.classList.add('selected');
+            
+            // Check the radio button
+            document.getElementById(serviceType).checked = true;
+        }
+
+        // Set minimum date to tomorrow
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('preferredDate').min = tomorrow.toISOString().split('T')[0];
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const bookingData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                bookingData[key] = value;
+            }
+            
+            // Get selected service details
+            const selectedService = document.querySelector('.service-option.selected');
+            if (selectedService) {
+                bookingData.serviceTitle = selectedService.querySelector('.service-title').textContent;
+                bookingData.servicePrice = selectedService.querySelector('.service-price').textContent;
+            }
+            
+            // Create email content
+            const emailContent = `
+New Car Wash Booking Request
+
+CUSTOMER INFORMATION:
+Name: ${bookingData.firstName} ${bookingData.lastName}
+Email: ${bookingData.email}
+Phone: ${bookingData.phone}
+
+SERVICE LOCATION:
+Address: ${bookingData.address}
+City: ${bookingData.city}
+ZIP Code: ${bookingData.zipCode}
+
+VEHICLE INFORMATION:
+Make: ${bookingData.vehicleMake}
+Model: ${bookingData.vehicleModel}
+Year: ${bookingData.vehicleYear || 'Not specified'}
+Color: ${bookingData.vehicleColor || 'Not specified'}
+
+SERVICE DETAILS:
+Package: ${bookingData.serviceTitle || 'Not selected'}
+Price: ${bookingData.servicePrice || 'Not selected'}
+
+SCHEDULING:
+Preferred Date: ${bookingData.preferredDate || 'Not specified'}
+Preferred Time: ${bookingData.preferredTime || 'Not specified'}
+
+ADDITIONAL NOTES:
+${bookingData.notes || 'None'}
+
+---
+This booking was submitted through the ScrubADubDudes website.
+            `;
+            
+            // Simulate form submission (since we can't actually send emails from frontend)
+            setTimeout(() => {
+                // In a real implementation, you would send this to a backend service
+                // For now, we'll show success and provide the email content
+                console.log('Booking Data:', bookingData);
+                console.log('Email Content:', emailContent);
+                
+                successMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-calendar-check"></i> Book My Car Wash';
+                
+                // Scroll to success message
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    this.reset();
+                    document.querySelectorAll('.service-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                }, 3000);
+                
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
