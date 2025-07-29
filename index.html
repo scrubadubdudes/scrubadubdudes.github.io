@@ -192,14 +192,15 @@
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 950px;
             padding: 2rem;
             z-index: 2;
             position: relative;
+            width: 100%;
         }
 
         .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
             font-weight: 800;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
@@ -207,6 +208,9 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: slideInUp 1s ease-out;
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: visible;
         }
 
         .hero-tagline {
@@ -496,6 +500,64 @@
             font-weight: 500;
         }
 
+        /* Gallery Section */
+        .gallery {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .gallery-photo {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-photo:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .photo-placeholder {
+            height: 200px;
+            background: var(--gradient-2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .photo-placeholder p {
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .photo-caption {
+            padding: 1.5rem;
+        }
+
+        .photo-caption h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .photo-caption p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
         /* Contact Section */
         .contact {
             background: #0f172a;
@@ -620,6 +682,10 @@
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -632,7 +698,9 @@
             }
             
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.2rem;
+                white-space: normal;
+                word-break: break-word;
             }
             
             .cta-buttons {
@@ -658,6 +726,7 @@
             <ul class="nav-links">
                 <li><a onclick="showTab('home')" class="active">Home</a></li>
                 <li><a onclick="showTab('mission')">Mission</a></li>
+                <li><a onclick="showTab('gallery')">Gallery</a></li>
                 <li><a onclick="showTab('impact')">Impact</a></li>
                 <li><a onclick="showTab('contact')">Contact</a></li>
             </ul>
@@ -678,7 +747,7 @@
                 <p class="hero-tagline">Washing Cars, Fighting Hunger</p>
                 <p class="hero-description">We clean your car while making a difference in our community. Every wash helps feed families in need through our innovative charity car wash program.</p>
                 <div class="cta-buttons">
-                    <a onclick="showTab('contact')" class="btn btn-primary">
+                    <a href="booking.html" class="btn btn-primary">
                         <i class="fas fa-calendar-check"></i> Book a Wash
                     </a>
                     <a onclick="showTab('mission')" class="btn btn-secondary">
@@ -714,8 +783,83 @@
                             <p>We bring our services to you, making it easy to get a clean car while supporting a great cause. It's community service made simple, effective, and convenient.</p>
                         </div>
                     </div>
-                    <div class="mission-visual">
-                        <i class="fas fa-hands-wash" style="font-size: 5rem;"></i>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Gallery Tab -->
+    <div id="gallery" class="tab-content">
+        <section class="section gallery">
+            <div class="section-content">
+                <h2 class="section-title">Our Work</h2>
+                <p class="section-subtitle">See the amazing transformations we've achieved while supporting our community</p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-car" style="font-size: 4rem; color: var(--primary);"></i>
+                            <p>Sparkling Clean Honda Civic</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>Professional Exterior Detail</h3>
+                            <p>Complete wash and wax service</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-truck" style="font-size: 4rem; color: var(--primary);"></i>
+                            <p>Fresh Ford F-150</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>Truck Cleaning Service</h3>
+                            <p>Thorough exterior and tire shine</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-car-side" style="font-size: 4rem; color: var(--primary);"></i>
+                            <p>Pristine Toyota RAV4</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>SUV Deep Clean</h3>
+                            <p>Interior and exterior detailing</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-car-wash" style="font-size: 4rem; color: var(--primary);"></i>
+                            <p>Professional Equipment</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>Eco-Friendly Tools</h3>
+                            <p>High-quality cleaning supplies</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-hands-wash" style="font-size: 4rem; color: var(--primary);"></i>
+                            <p>Team at Work</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>Professional Service</h3>
+                            <p>Our experienced team in action</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-photo">
+                        <div class="photo-placeholder">
+                            <i class="fas fa-heart" style="font-size: 4rem; color: #ff6b6b;"></i>
+                            <p>Community Impact</p>
+                        </div>
+                        <div class="photo-caption">
+                            <h3>Fighting Hunger</h3>
+                            <p>Every wash helps feed families</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -769,6 +913,7 @@
                         <i class="fas fa-phone"></i> Phone: (555) CAR-WASH<br>
                         <i class="fas fa-envelope"></i> Email: hello@scrubadubdudes.org<br>
                         <i class="fas fa-clock"></i> Monday - Saturday: 8AM - 6PM</p>
+                    </div>
                     </div>
                     
                     <div class="contact-card">
