@@ -326,7 +326,11 @@
             <p class="booking-subtitle">Get your car professionally cleaned while supporting local hunger relief efforts</p>
         </div>
 
-        <form class="form-container" id="bookingForm">
+        <form class="form-container" id="bookingForm" action="https://formspree.io/f/xanbjzjo" method="POST">
+            <!-- Hidden fields for better email formatting -->
+            <input type="hidden" name="_subject" value="New Car Wash Booking Request - ScrubADubDudes">
+            <input type="hidden" name="_replyto" id="replyToEmail">
+            
             <!-- Personal Information -->
             <div class="form-section">
                 <h3 class="section-title">
@@ -501,95 +505,41 @@
         tomorrow.setDate(tomorrow.getDate() + 1);
         document.getElementById('preferredDate').min = tomorrow.toISOString().split('T')[0];
 
-        // Form submission
+        // Form submission with Formspree
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             const submitBtn = document.querySelector('.submit-btn');
             const successMsg = document.getElementById('successMessage');
             const errorMsg = document.getElementById('errorMessage');
+            
+            // Set reply-to email from form
+            const emailField = document.getElementById('email');
+            const replyToField = document.getElementById('replyToEmail');
+            if (emailField && replyToField) {
+                replyToField.value = emailField.value;
+            }
             
             // Hide previous messages
             successMsg.style.display = 'none';
             errorMsg.style.display = 'none';
             
-            // Disable submit button
+            // Show loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
-            // Collect form data
-            const formData = new FormData(this);
-            const bookingData = {};
-            
-            for (let [key, value] of formData.entries()) {
-                bookingData[key] = value;
+            // Let Formspree handle the submission naturally
+            // The form will submit normally to Formspree
+        });
+
+        // Handle successful form submission (Formspree redirects back)
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('bookingForm').reset();
+                document.querySelectorAll('.service-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
             }
-            
-            // Get selected service details
-            const selectedService = document.querySelector('.service-option.selected');
-            if (selectedService) {
-                bookingData.serviceTitle = selectedService.querySelector('.service-title').textContent;
-                bookingData.servicePrice = selectedService.querySelector('.service-price').textContent;
-            }
-            
-            // Create email content
-            const emailContent = `
-New Car Wash Booking Request
-
-CUSTOMER INFORMATION:
-Name: ${bookingData.firstName} ${bookingData.lastName}
-Email: ${bookingData.email}
-Phone: ${bookingData.phone}
-
-SERVICE LOCATION:
-Address: ${bookingData.address}
-City: ${bookingData.city}
-ZIP Code: ${bookingData.zipCode}
-
-VEHICLE INFORMATION:
-Make: ${bookingData.vehicleMake}
-Model: ${bookingData.vehicleModel}
-Year: ${bookingData.vehicleYear || 'Not specified'}
-Color: ${bookingData.vehicleColor || 'Not specified'}
-
-SERVICE DETAILS:
-Package: ${bookingData.serviceTitle || 'Not selected'}
-Price: ${bookingData.servicePrice || 'Not selected'}
-
-SCHEDULING:
-Preferred Date: ${bookingData.preferredDate || 'Not specified'}
-Preferred Time: ${bookingData.preferredTime || 'Not specified'}
-
-ADDITIONAL NOTES:
-${bookingData.notes || 'None'}
-
----
-This booking was submitted through the ScrubADubDudes website.
-            `;
-            
-            // Simulate form submission (since we can't actually send emails from frontend)
-            setTimeout(() => {
-                // In a real implementation, you would send this to a backend service
-                // For now, we'll show success and provide the email content
-                console.log('Booking Data:', bookingData);
-                console.log('Email Content:', emailContent);
-                
-                successMsg.style.display = 'block';
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-calendar-check"></i> Book My Car Wash';
-                
-                // Scroll to success message
-                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Reset form after 3 seconds
-                setTimeout(() => {
-                    this.reset();
-                    document.querySelectorAll('.service-option').forEach(option => {
-                        option.classList.remove('selected');
-                    });
-                }, 3000);
-                
-            }, 2000);
         });
     </script>
 </body>
